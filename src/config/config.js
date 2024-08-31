@@ -30,6 +30,8 @@ const s3Bucket = process.env.S3_BUCKET_NAME;
 
 const s3 = new AWS.S3();
 
+const mainServiceUrl = process.env.MAIN_SERVICE_URL;
+
 module.exports = {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
@@ -38,4 +40,5 @@ module.exports = {
   },
   s3,
   s3Bucket,
+  mainServiceUrl,
 };

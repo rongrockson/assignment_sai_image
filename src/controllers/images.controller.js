@@ -2,13 +2,13 @@ const httpStatus = require('http-status');
 const axios = require('axios');
 const catchAsync = require('../utils/catchAsync');
 const imagesService = require('../services/images.service');
+const config = require('../config/config');
 
 // call the main service after processing the images
-// https://assignment-spyne-rongrockson-rockson-rongs-projects.vercel.app/v1/product-image-csv/webhook
 const sendOutput = async (requestId, serialNumber, outputUrls) => {
   try {
     const response = await axios.post(
-      'https://assignment-spyne-rongrockson-rockson-rongs-projects.vercel.app/v1/product-image-csv/webhook',
+      `${config.mainServiceUrl}/v1/product-image-csv/webhook`,
       {
         requestId,
         serialNumber,
