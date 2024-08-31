@@ -1,0 +1,1 @@
+module.exports.ProductCsv = require('./productCsv.model');

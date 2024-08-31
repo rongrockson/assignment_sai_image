@@ -1,0 +1,22 @@
+version: '1'
+
+services:
+  node-app:
+    build: .
+    image: node-app
+    environment:
+      - MONGODB_URL=mongodb://host.docker.internal:27017/capitxcel
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/src/node-app
+    networks:
+      - node-network
+
+volumes:
+  dbdata:
+
+
+networks:
+  node-network:
+    driver: bridge
