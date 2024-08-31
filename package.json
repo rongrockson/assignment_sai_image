@@ -49,6 +49,7 @@
     "prettier"
   ],
   "dependencies": {
+    "aws-sdk": "^2.1687.0",
     "axios": "^1.7.5",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
