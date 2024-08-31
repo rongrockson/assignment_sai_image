@@ -1,1 +1,1 @@
-module.exports.productCsvService = require('./productCsv.service');
+module.exports.imagesService = require('./images.service');

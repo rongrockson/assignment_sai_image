@@ -1,11 +1,11 @@
 const express = require('express');
-const imagesRoute = require('./productCsv.route');
+const imagesRoute = require('./images.route');
 
 const router = express.Router();
 
 const defaultRoutes = [
   {
-    path: '/product-image-csv',
+    path: '/images',
     route: imagesRoute,
   },
 ];

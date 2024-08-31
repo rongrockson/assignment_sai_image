@@ -1,1 +1,1 @@
-module.exports.imagesController = require('./productCsv.controller');
+module.exports.imagesController = require('./images.controller');
