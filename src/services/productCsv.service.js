@@ -98,7 +98,7 @@ const download = async (requestId) => {
 
     // Define the fields for CSV
     const fields = ['S. No.', 'Product Name', 'Input Image Urls', 'Output Image Urls'];
-    const opts = { fields };
+    const opts = { fields, delimiter: '|', };
 
     // Map the data to match the CSV format
     const data = productCSV.products.map(product => ({
@@ -152,8 +152,50 @@ const processCSV = async (requestId) => {
     }
 };
 
+const download2 = async (requestId) => {
+    logger.info("requestId", requestId);
+    const productCSV = await ProductCsv.findOne({ requestId });
+
+    if (!productCSV) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'Request not found');
+    }
+
+    if (productCSV.status !== 'completed') {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'CSV processing not yet completed');
+    }
+
+    // Define the fields for CSV
+    const fields = ['S. No.', 'Product Name', 'Input Image Urls', 'Output Image Urls'];
+    const opts = {
+        fields,
+        delimiter: '|', // Set the delimiter to |
+    };
+
+    // Map the data to match the CSV format
+    const data = productCSV.products.map(product => ({
+        'S. No.': product.serialNumber,
+        'Product Name': product.name,
+        'Input Image Urls': product.images.map(img => img.inputUrl).join(', '), // Join URLs with comma
+        'Output Image Urls': product.images.map(img => img.outputUrl || '').join(', ') // Join URLs with comma
+    }));
+
+    try {
+        // Generate CSV using the json2csv Parser
+        const parser = new Parser(opts);
+        const csv = parser.parse(data);
+
+        // Create a Readable stream from the CSV string
+        const csvStream = Readable.from(csv);
+
+        return csvStream;
+    } catch (err) {
+        throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Error generating CSV');
+    }
+};
+
 module.exports = {
     uploadCsv,
     getStatus,
     download,
+    download2
 };

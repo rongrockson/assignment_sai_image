@@ -25,8 +25,26 @@ const download = catchAsync(async (req, res) => {
     res.send(csv);
 });
 
+const download2 = catchAsync(async (req, res) => {
+    const { requestId } = req.query;
+
+    try {
+        const csvStream = await productCsvService.download2(requestId);
+
+        // Set the headers to prompt a file download
+        res.setHeader('Content-disposition', `attachment; filename=processed_product_images_${requestId}.csv`);
+        res.setHeader('Content-type', 'text/csv');
+
+        // Pipe the CSV stream to the response
+        csvStream.pipe(res);
+    } catch (error) {
+        res.status(error.statusCode || 500).send(error.message);
+    }
+});
+
 module.exports = {
     uploadCsv,
     getStatus,
     download,
+    download2
 };

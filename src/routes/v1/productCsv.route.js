@@ -15,4 +15,8 @@ router
     .route('/download')
     .get(imagesController.download);
 
+router
+    .route('/download2')
+    .get(imagesController.download2);
+
 module.exports = router;
