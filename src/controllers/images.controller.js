@@ -7,14 +7,11 @@ const config = require('../config/config');
 // call the main service after processing the images
 const sendOutput = async (requestId, serialNumber, outputUrls) => {
   try {
-    const response = await axios.post(
-      `${config.mainServiceUrl}/v1/product-image-csv/webhook`,
-      {
-        requestId,
-        serialNumber,
-        outputUrls,
-      }
-    );
+    const response = await axios.post(`${config.mainServiceUrl}/v1/product-image-csv/webhook`, {
+      requestId,
+      serialNumber,
+      outputUrls,
+    });
     return response.data;
   } catch (error) {
     throw new Error('Error sending output to main service');
