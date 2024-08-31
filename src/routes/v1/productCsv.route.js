@@ -13,10 +13,6 @@ router
 
 router
     .route('/download')
-    .get(imagesController.download);
-
-router
-    .route('/download2')
-    .get(imagesController.download2);
+    .get(imagesController.downloadCsv);
 
 module.exports = router;
