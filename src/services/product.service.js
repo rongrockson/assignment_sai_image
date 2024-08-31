@@ -9,6 +9,7 @@ const saveProducts = async (products) => {
 
 const processImage = async (inputUrl) => {
     // Simulate image processing
+    //reduce the size of the image to 50% of the original
     return `${inputUrl}/processed`;  // Example of processing
 };
 
