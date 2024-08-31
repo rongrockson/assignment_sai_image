@@ -26,6 +26,8 @@ AWS.config.update({
   region: process.env.AWS_REGION,
 });
 
+const s3Bucket = process.env.S3_BUCKET_NAME;
+
 const s3 = new AWS.S3();
 
 module.exports = {
@@ -35,4 +37,5 @@ module.exports = {
     url: envVars.MONGODB_URL,
   },
   s3,
+  s3Bucket,
 };

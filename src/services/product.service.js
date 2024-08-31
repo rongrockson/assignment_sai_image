@@ -8,6 +8,7 @@ const { Product } = require('../models');
 const ApiError = require('../utils/ApiError');
 const { s3 } = require('../config/config');
 const logger = require('../config/logger');
+const config = require('../config/config');
 
 const downloadImage = async (url) => {
   const response = await axios({
@@ -24,8 +25,9 @@ const saveProducts = async (products) => {
 
 const uploadToS3 = async (buffer, filename) => {
   try {
+    logger.info('Uploading file to S3' + filename);
     const params = {
-      Bucket: process.env.S3_BUCKET_NAME,
+      Bucket: config.s3Bucket,
       Key: filename,
       Body: buffer,
       ContentType: 'image/jpeg', // Adjust the content type if needed
@@ -56,7 +58,7 @@ const processImage = async (inputUrl) => {
     return s3Url;
   } catch (error) {
     logger.error(`Error processing image ${inputUrl}`, error);
-    return null;
+    throw new Error(`Error processing image ${inputUrl}`);
   }
 };
 
